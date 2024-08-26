@@ -35,12 +35,12 @@ function downloadTextAsFile(text, filename) {
         let $content = $(data);
         let $nextUrl = $content.find(nextUrlPath);
         let name = $content.find(zhanjieNamePath).text();
-        let newContent = content + '\n\r' + name + '\n\r' + $content.find(contentPath).text();
-        // if ($nextUrl.text() == '没有了') {
-            // setTimeout(() => {down($nextUrl[0].href, newContent);}, 500);
-        // } else {
+        let newContent = content + '\n\r' + name + '\n\r' + $content.find(contentPath).find('div').empty().parent().text().trim();
+        if ($nextUrl.text() == '没有了') {
             let bookname = $content.find('#wrapper > article > div.con_top > a:nth-child(3)').text();
             downloadTextAsFile(newContent, bookname);
-        // }
+        } else {
+            setTimeout(() => {down($nextUrl[0].href, newContent);}, 200);
+        }
     }})
-})($(nextUrlPath)[0].href, $(zhanjieNamePath).text() + "\n\r" + $(contentPath).text());
+})($(nextUrlPath)[0].href, $(zhanjieNamePath).text() + "\n\r" + $(contentPath).find('div').empty().parent().text().trim());
